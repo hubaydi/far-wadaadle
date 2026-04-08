@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-export type ArabicFont = "scheherazade" | "lateef";
+export type ArabicFont = "scheherazade" | "lateef" | "cairo";
 
 interface FontToggleProps {
   value: ArabicFont;
@@ -12,6 +12,7 @@ interface FontToggleProps {
 const FONTS: { id: ArabicFont; label: string }[] = [
   { id: "scheherazade", label: "Scheherazade" },
   { id: "lateef", label: "Lateef" },
+  { id: "cairo", label: "Cairo" },
 ];
 
 export default function FontToggle({ value, onChange }: FontToggleProps) {
@@ -43,6 +44,7 @@ export default function FontToggle({ value, onChange }: FontToggleProps) {
 
 /** Returns the CSS font-family string for a given ArabicFont key */
 export function getFontFamily(font: ArabicFont): string {
+  if (font === "cairo") return '"Cairo", sans-serif';
   return font === "scheherazade"
     ? '"Scheherazade New", serif'
     : '"Lateef", serif';

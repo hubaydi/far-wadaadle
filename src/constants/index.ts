@@ -9,11 +9,11 @@ export const LATIN_TO_FAR_WADAAD = new Map<string, string>([
   ["kh", "خ"],
   ["sh", "ش"],
   ["dh", "ڎ"],
-  ["aa", "ا\u064E"],
-  ["ee", "ي\u065A"],
-  ["ii", "ي\u0650"],
-  ["oo", "و\u0657"],
-  ["uu", "و\u064F"],
+  ["aa", "\u064Eا"],
+  ["ee", "\u065Aي"],
+  ["ii", "\u0650ي"],
+  ["oo", "\u0657و"],
+  ["uu", "\u064Fو"],
 
   // ── Consonants ────────────────────────────────────────────────
   ["b", "ب"],
@@ -35,7 +35,7 @@ export const LATIN_TO_FAR_WADAAD = new Map<string, string>([
   ["w", "و"],
   ["y", "ي"],
 
-  ["'", "\u0621"],
+  ["'", "أ"],
 
   // ── Short vowels (diacritics) ──────────────────────────────────
   ["a", "\u064E"], // Fatha   َ
@@ -68,7 +68,18 @@ export const numberMap = new Map<string, string>([
 export const ALIF = "أ";
 
 /** Short vowel Latin keys (used for Initial Alif Injection detection) */
-export const VOWELS = new Set(["a", "e", "i", "o", "u"]);
+export const VOWELS = new Set([
+  "a",
+  "e",
+  "i",
+  "o",
+  "u",
+  "aa",
+  "ee",
+  "ii",
+  "oo",
+  "uu",
+]);
 
 /**
  * Shaddah (ّ) — Arabic diacritic indicating consonant gemination.
@@ -79,8 +90,26 @@ export const SHADDAH = "\u0651"; // ّ
 
 /** All consonant keys from the map that can be geminated */
 export const CONSONANT_KEYS = new Set([
-  "b", "t", "j", "x", "d", "r", "s", "c", "g",
-  "f", "q", "k", "l", "m", "n", "h", "w", "y",
+  "b",
+  "t",
+  "j",
+  "x",
+  "d",
+  "r",
+  "s",
+  "c",
+  "g",
+  "f",
+  "q",
+  "k",
+  "l",
+  "m",
+  "n",
+  "h",
+  "w",
+  "y",
   // digraph consonants
-  "dh", "sh", "kh",
+  "dh",
+  "sh",
+  "kh",
 ]);
