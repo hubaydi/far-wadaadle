@@ -45,12 +45,12 @@ export default function Home() {
       {/* ── Hero ───────────────────────────────────────────────────────────── */}
       <section className="border-b border-border/40 bg-linear-to-b from-primary/5 to-transparent px-4 py-10 text-center sm:px-6">
         <h1 className="mb-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Ku qor Af-soomaaliga <span className="text-primary">Far-Wadaad</span>
+          Ku qor <span className="text-primary">Far-Wadaad</span> Af-soomaaliga
         </h1>
         <p className="mx-auto max-w-xl text-base text-muted-foreground">
           U rogida tooska ah ee Soomaali Laatiin ilaa{" "}
-          <strong>Far-Wadaad</strong> — farta taariikhiga ah ee carabiga ee
-          afka Soomaaliga{" "}
+          <strong>Far-Wadaad</strong> — farta taariikhiga ah ee carabiga ee afka
+          Soomaaliga{" "}
         </p>
       </section>
 
@@ -100,10 +100,11 @@ export default function Home() {
               </tbody>
             </table>
             <p className="mt-3 text-xs text-muted-foreground">
-              Waxaa la muujiyay {QUICK_REF.length} kamid ah {LATIN_TO_FAR_WADAAD.size} xarfo.
-              Shaqalada gaagaaban ee <span className="font-mono">a e i o u</span> waxay noqdaan
-              shaqalo carabi (ḥarakāt). Erayada ka bilowda shaqal waxay si toos ah
-              u qaataan xarafka Alif (ا).
+              Waxaa la muujiyay {QUICK_REF.length} kamid ah{" "}
+              {LATIN_TO_FAR_WADAAD.size} xarfo. Shaqalada gaagaaban ee{" "}
+              <span className="font-mono">a e i o u</span> waxay noqdaan shaqalo
+              carabi (ḥarakāt). Erayada ka bilowda shaqal waxay si toos ah u
+              qaataan xarafka Alif (ا).
             </p>
           </div>
         </details>
@@ -112,7 +113,8 @@ export default function Home() {
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
       <footer className="border-t border-border/60 px-4 py-6 text-center text-xs text-muted-foreground sm:px-6">
         <p>
-          Far-Wadaadle · Beddele Farta Soomaali Carabi/Laatiin · Waxaa ❤️ ku sameeyay
+          Far-Wadaadle · Beddele Farta Soomaali Carabi/Laatiin · Waxaa ❤️ ku
+          sameeyay
           <a href="https://github.com/hubaydi"> Hobaydi</a>
         </p>
         <p className="mt-1">
