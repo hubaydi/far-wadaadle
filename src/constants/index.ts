@@ -69,3 +69,18 @@ export const ALIF = "أ";
 
 /** Short vowel Latin keys (used for Initial Alif Injection detection) */
 export const VOWELS = new Set(["a", "e", "i", "o", "u"]);
+
+/**
+ * Shaddah (ّ) — Arabic diacritic indicating consonant gemination.
+ * In Somali Latin, doubled consonants (rr, dd, mm…) become
+ * a single Arabic consonant + shaddah.
+ */
+export const SHADDAH = "\u0651"; // ّ
+
+/** All consonant keys from the map that can be geminated */
+export const CONSONANT_KEYS = new Set([
+  "b", "t", "j", "x", "d", "r", "s", "c", "g",
+  "f", "q", "k", "l", "m", "n", "h", "w", "y",
+  // digraph consonants
+  "dh", "sh", "kh",
+]);

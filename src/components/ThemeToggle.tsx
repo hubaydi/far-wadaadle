@@ -12,6 +12,7 @@ export default function ThemeToggle() {
       "(prefers-color-scheme: dark)",
     ).matches;
     const isDark = stored === "dark" || (!stored && prefersDark);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
   }, []);

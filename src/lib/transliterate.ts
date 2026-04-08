@@ -1,6 +1,8 @@
 import {
   ALIF,
+  CONSONANT_KEYS,
   LATIN_TO_FAR_WADAAD,
+  SHADDAH,
   VOWELS,
   numberMap,
   punctuationMap,
@@ -22,6 +24,7 @@ const TRANSLITERATE_REGEX = new RegExp(
   ALL_KEYS.map(escapeRegex).join("|"),
   "gi",
 );
+
 // ── Transliteration function ─────────────────────────────────────────────────
 
 /**
@@ -29,21 +32,23 @@ const TRANSLITERATE_REGEX = new RegExp(
  *
  * Rules applied:
  * 1. Greedy regex: digraphs (aa, sh, dh …) matched before single chars.
- * 2. Initial Alif Injection: vowel-initial words get "ا" prepended.
- * 3. Punctuation & Eastern Arabic numeral substitution.
- * 4. Non-matching characters (spaces, newlines, etc.) pass through as-is.
+ * 2. Initial Alif Injection: vowel-initial words get "أ" prepended.
+ * 3. Consonant Gemination (Shaddah): doubled consonants (rr, dd,mm …)
+ *    emit the Arabic consonant once + shaddah (ّ) instead of repeating.
+ * 4. Punctuation & Eastern Arabic numeral substitution.
+ * 5. Non-matching characters (spaces, newlines, etc.) pass through as-is.
  */
 export function transliterate(input: string): string {
   if (!input) return "";
 
-  // Track whether the PREVIOUS regex match ended at a word boundary so we can
-  // inject an Alif before vowel-initial tokens.
   let lastIndex = 0;
-  let isWordStart = true; // true at the beginning of the string
+  let isWordStart = true;
 
   let result = "";
 
-  // We use matchAll instead of replace() so we have full positional control.
+  // Track the previous consonant for gemination detection
+  let prevConsonantKey: string | null = null;
+
   const globalRegex = new RegExp(TRANSLITERATE_REGEX.source, "gi");
 
   for (const match of input.matchAll(globalRegex)) {
@@ -55,8 +60,8 @@ export function transliterate(input: string): string {
     const gap = input.slice(lastIndex, index);
     if (gap) {
       result += gap;
-      // A gap containing a word-separator resets the word-start flag
       isWordStart = /[\s\n\r]/.test(gap[gap.length - 1]);
+      prevConsonantKey = null; // gap breaks any consonant pairing
     }
 
     // Look up the mapping
@@ -67,19 +72,33 @@ export function transliterate(input: string): string {
     if (fromPunct !== undefined) {
       result += fromPunct;
       isWordStart = false;
+      prevConsonantKey = null;
     } else if (fromNum !== undefined) {
       result += fromNum;
       isWordStart = false;
+      prevConsonantKey = null;
     } else if (fromLatin !== undefined) {
-      // Initial Alif Injection: prepend ا when a word starts with a vowel
-      if (isWordStart && VOWELS.has(lower)) {
-        result += ALIF;
+      const isConsonant = CONSONANT_KEYS.has(lower);
+
+      // ── Gemination (Shaddah) ──
+      // If this consonant is the same as the previous one → add shaddah
+      if (isConsonant && prevConsonantKey === lower) {
+        result += SHADDAH;
+        prevConsonantKey = null; // reset so triple letters = consonant + shaddah + consonant
+        isWordStart = false;
+      } else {
+        // Initial Alif Injection: prepend أ when a word starts with a vowel
+        if (isWordStart && VOWELS.has(lower)) {
+          result += ALIF;
+        }
+        result += fromLatin;
+        prevConsonantKey = isConsonant ? lower : null;
+        isWordStart = false;
       }
-      result += fromLatin;
-      isWordStart = false;
     } else {
       result += raw;
       isWordStart = /\s/.test(raw);
+      prevConsonantKey = null;
     }
 
     lastIndex = index + raw.length;
@@ -106,6 +125,20 @@ export function reverseTransliterate(input: string): string {
   let result = "";
   let i = 0;
   while (i < input.length) {
+    const char = input[i];
+
+    // If character is a Shaddah, we duplicate the last Latin consonant appended
+    if (char === SHADDAH) {
+      // Find the last alphabetical segment we appended to result
+      const lastAlphaMatch = /[a-zA-Z]+$/.exec(result);
+      if (lastAlphaMatch) {
+         // Duplicate the entire last segment (it could be a digraph like 'dh' or single char like 'r')
+         result += lastAlphaMatch[0];
+      }
+      i++;
+      continue;
+    }
+
     // Try two-char Arabic sequence first (e.g. "وٗ" is 2 code points)
     const two = input.slice(i, i + 2);
     if (FAR_WADAAD_TO_LATIN.has(two)) {
@@ -114,7 +147,7 @@ export function reverseTransliterate(input: string): string {
     } else {
       const one = input[i];
       // Strip standalone Alif at word-start (it is injected, not a consonant)
-      if (one === ALIF) {
+      if (one === ALIF && (i === 0 || /\s/.test(input[i - 1]))) {
         i++;
         continue;
       }
