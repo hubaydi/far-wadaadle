@@ -130,7 +130,7 @@ export default function TransliteratorPane() {
           aria-label="Toggle transliteration direction"
           className="rounded-md border border-border px-3 py-1 text-xs font-medium transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          {direction === "ltr-to-rtl" ? "Latin → Arabic ⇄" : "Arabic → Latin ⇄"}
+          {direction === "ltr-to-rtl" ? "Laatiin → Carabi ⇄" : "Carabi → Laatiin ⇄"}
         </button>
         <span>{arabicText.length} xaraf far-wadaad</span>
       </div>

@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Far-Wadaadle — Somali Latin to Arabic Script Converter",
+  title: "Far-Wadaadle — Beddele Soomaali Laatiin to Far-Wadaad",
   description:
-    "Real-time Somali Far Wadaad (Arabic script) transliteration. Convert Somali Latin text to the historic Arabic orthography instantly — for free.",
+    "Beddelaad toos ah oo Far Wadaad (farta carabiga ee soomaaliga) ah. U beddel qoraalka Soomaali Laatiinka farta taariikhiga ah ee far Wadaad si dhakhso ah .",
   keywords: [
     "Somali Arabic script",
     "Far Wadaad",
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
     "Af Soomaali",
   ],
   openGraph: {
-    title: "Far-Wadaadle — Somali Latin to Arabic Script",
+    title: "Far-Wadaadle — Soomaali Laatiin to Far-Wadaad",
     description:
-      "Convert Somali Latin text to Far Wadaad (Arabic script) in real-time.",
+      "U beddel qoraalka Soomaali Laatiinka Far-Wadaad (farta carabiga) si toos ah.",
     locale: "so",
     type: "website",
   },

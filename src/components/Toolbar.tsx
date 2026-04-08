@@ -49,11 +49,11 @@ export default function Toolbar({ outputText, onClear }: ToolbarProps) {
           base,
           copied
             ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-            : "bg-muted text-muted-foreground hover:text-foreground hover:bg-accent"
+            : "bg-muted text-muted-foreground hover:text-foreground hover:bg-accent",
         )}
       >
         {copied ? <Check size={15} /> : <ClipboardCopy size={15} />}
-        {copied ? "Copied!" : "Copy"}
+        {copied ? "La koobiyee!" : "Koobiyee"}
       </button>
 
       {/* Download */}
@@ -64,11 +64,11 @@ export default function Toolbar({ outputText, onClear }: ToolbarProps) {
         aria-label="Download Arabic output as text file"
         className={cn(
           base,
-          "bg-muted text-muted-foreground hover:text-foreground hover:bg-accent"
+          "bg-muted text-muted-foreground hover:text-foreground hover:bg-accent",
         )}
       >
         <Download size={15} />
-        Download
+        Soo deji
       </button>
 
       {/* Clear All */}
@@ -78,11 +78,11 @@ export default function Toolbar({ outputText, onClear }: ToolbarProps) {
         aria-label="Clear all text"
         className={cn(
           base,
-          "bg-destructive/10 text-destructive hover:bg-destructive/20"
+          "bg-destructive/10 text-destructive hover:bg-destructive/20",
         )}
       >
         <Trash2 size={15} />
-        Clear
+        Tirtir
       </button>
     </div>
   );
