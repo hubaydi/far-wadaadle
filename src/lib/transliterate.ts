@@ -61,7 +61,8 @@ export function transliterate(input: string): string {
       }
       if (prevConsonantKey) result += SUKUN;
       result += gap;
-      isWordStart = /\s/.test(gap[gap.length - 1]);
+      // Any gap (whitespace OR punctuation in the gap) treats the next char as a potential word start
+      isWordStart = true; 
       prevConsonantKey = null; // gap breaks any consonant pairing
     }
 
@@ -74,14 +75,14 @@ export function transliterate(input: string): string {
       if (pendingApostrophe) result += ALIF;
       if (prevConsonantKey) result += SUKUN;
       result += fromPunct;
-      isWordStart = false;
+      isWordStart = true; // Punctuation starts a new potential word context
       prevConsonantKey = null;
       pendingApostrophe = false;
     } else if (fromNum !== undefined) {
       if (pendingApostrophe) result += ALIF;
       if (prevConsonantKey) result += SUKUN;
       result += fromNum;
-      isWordStart = false;
+      isWordStart = true;
       prevConsonantKey = null;
       pendingApostrophe = false;
     } else if (fromLatin !== undefined) {
@@ -93,7 +94,7 @@ export function transliterate(input: string): string {
         pendingApostrophe = true;
         prevConsonantKey = null;
         lastIndex = index + raw.length;
-        isWordStart = false;
+        isWordStart = false; // Apostrophe itself isn't a word break
         continue;
       }
 
@@ -139,7 +140,8 @@ export function transliterate(input: string): string {
       if (pendingApostrophe) result += ALIF;
       if (prevConsonantKey) result += SUKUN;
       result += raw;
-      isWordStart = /\s/.test(raw);
+      // If the raw char is not a letter/number, it's a word break for the next sequence
+      isWordStart = !/[a-zA-Z0-9]/.test(raw);
       prevConsonantKey = null;
       pendingApostrophe = false;
     }
