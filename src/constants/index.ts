@@ -1,11 +1,9 @@
 /**
  * Primary Latin → Far Wadaad (Arabic script) character map.
- * Ordered with digraphs before single chars so that
- * greedy regex sorting is explicit in source, though the engine
- * always re-sorts longest-first at runtime.
+ * Ordered with digraphs before single chars for explicit source readability.
  */
-export const LATIN_TO_FAR_WADAAD = new Map<string, string>([
-  // ── Digraphs (must come before their single-char equivalents) ──
+export const LATIN_TO_FAR_WADAAD: ReadonlyMap<string, string> = new Map([
+  // ── Digraphs ──
   ["kh", "خ"],
   ["sh", "ش"],
   ["dh", "ڎ"],
@@ -15,7 +13,7 @@ export const LATIN_TO_FAR_WADAAD = new Map<string, string>([
   ["oo", "\u0657و"],
   ["uu", "\u064Fو"],
 
-  // ── Consonants ────────────────────────────────────────────────
+  // ── Consonants ──
   ["b", "ب"],
   ["t", "ت"],
   ["j", "ج"],
@@ -34,24 +32,23 @@ export const LATIN_TO_FAR_WADAAD = new Map<string, string>([
   ["h", "ه"],
   ["w", "و"],
   ["y", "ي"],
-
   ["'", "أ"],
 
-  // ── Short vowels (diacritics) ──────────────────────────────────
-  ["a", "\u064E"], // Fatha   َ
-  ["e", "\u065A"], // Small V Below ٚ
-  ["i", "\u0650"], // Kasra   ِ
-  ["o", "\u0657"], // Inverted Damma ٗ
-  ["u", "\u064F"], // Damma   ُ
+  // ── Short vowels (diacritics) ──
+  ["a", "\u064E"], // Fatha
+  ["e", "\u065A"], // Small V Below
+  ["i", "\u0650"], // Kasra
+  ["o", "\u0657"], // Inverted Damma
+  ["u", "\u064F"], // Damma
 ]);
 
-export const punctuationMap = new Map<string, string>([
-  ["?", "؟"], // Arabic question mark
-  [",", "،"], // Arabic comma
-  [";", "؛"], // Arabic semicolon
+export const punctuationMap: ReadonlyMap<string, string> = new Map([
+  ["?", "؟"],
+  [",", "،"],
+  [";", "؛"],
 ]);
 
-export const numberMap = new Map<string, string>([
+export const numberMap: ReadonlyMap<string, string> = new Map([
   ["0", "٠"],
   ["1", "١"],
   ["2", "٢"],
@@ -64,15 +61,15 @@ export const numberMap = new Map<string, string>([
   ["9", "٩"],
 ]);
 
-/** Initial Alif prefix — prepended when a word starts with a vowel */
 export const ALIF = "أ";
 export const ALIF_MADDA = "آ";
 export const ALIF_HAMZA_BELOW = "إ";
 export const HAMZA_ON_WAW = "ؤ";
 export const HAMZA_ON_YA = "ئ";
+export const SHADDAH = "\u0651";
+export const SUKUN = "\u0652";
 
-/** Short vowel Latin keys (used for Initial Alif Injection detection) */
-export const VOWELS = new Set([
+export const VOWELS: ReadonlySet<string> = new Set([
   "a",
   "e",
   "i",
@@ -85,16 +82,7 @@ export const VOWELS = new Set([
   "uu",
 ]);
 
-/**
- * Shaddah (ّ) — Arabic diacritic indicating consonant gemination.
- * In Somali Latin, doubled consonants (rr, dd, mm…) become
- * a single Arabic consonant + shaddah.
- */
-export const SHADDAH = "\u0651"; // ّ
-export const SUKUN = "\u0652";   // ْ
-
-/** All consonant keys from the map that can be geminated */
-export const CONSONANT_KEYS = new Set([
+export const CONSONANT_KEYS: ReadonlySet<string> = new Set([
   "b",
   "t",
   "j",
@@ -113,7 +101,6 @@ export const CONSONANT_KEYS = new Set([
   "h",
   "w",
   "y",
-  // digraph consonants
   "dh",
   "sh",
   "kh",
