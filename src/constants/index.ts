@@ -66,6 +66,8 @@ export const numberMap = new Map<string, string>([
 
 /** Initial Alif prefix — prepended when a word starts with a vowel */
 export const ALIF = "أ";
+export const ALIF_MADDA = "آ";
+export const ALIF_HAMZA_BELOW = "إ";
 
 /** Short vowel Latin keys (used for Initial Alif Injection detection) */
 export const VOWELS = new Set([
@@ -87,6 +89,7 @@ export const VOWELS = new Set([
  * a single Arabic consonant + shaddah.
  */
 export const SHADDAH = "\u0651"; // ّ
+export const SUKUN = "\u0652";   // ْ
 
 /** All consonant keys from the map that can be geminated */
 export const CONSONANT_KEYS = new Set([

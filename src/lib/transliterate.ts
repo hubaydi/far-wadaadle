@@ -1,8 +1,11 @@
 import {
   ALIF,
+  ALIF_HAMZA_BELOW,
+  ALIF_MADDA,
   CONSONANT_KEYS,
   LATIN_TO_FAR_WADAAD,
   SHADDAH,
+  SUKUN,
   VOWELS,
   numberMap,
   punctuationMap,
@@ -27,17 +30,6 @@ const TRANSLITERATE_REGEX = new RegExp(
 
 // ── Transliteration function ─────────────────────────────────────────────────
 
-/**
- * Transliterates Somali Latin script to Far Wadaad (Arabic script).
- *
- * Rules applied:
- * 1. Greedy regex: digraphs (aa, sh, dh …) matched before single chars.
- * 2. Initial Alif Injection: vowel-initial words get "أ" prepended.
- * 3. Consonant Gemination (Shaddah): doubled consonants (rr, dd,mm …)
- *    emit the Arabic consonant once + shaddah (ّ) instead of repeating.
- * 4. Punctuation & Eastern Arabic numeral substitution.
- * 5. Non-matching characters (spaces, newlines, etc.) pass through as-is.
- */
 export function transliterate(input: string): string {
   if (!input) return "";
 
@@ -54,13 +46,15 @@ export function transliterate(input: string): string {
   for (const match of input.matchAll(globalRegex)) {
     const { index } = match as RegExpMatchArray & { index: number };
     const raw = match[0];
+
     const lower = raw.toLowerCase();
 
     // Characters between the last match and this one (spaces, unknowns, etc.)
     const gap = input.slice(lastIndex, index);
     if (gap) {
+      if (prevConsonantKey) result += SUKUN;
       result += gap;
-      isWordStart = /[\s\n\r]/.test(gap[gap.length - 1]);
+      isWordStart = /\s/.test(gap[gap.length - 1]);
       prevConsonantKey = null; // gap breaks any consonant pairing
     }
 
@@ -70,10 +64,12 @@ export function transliterate(input: string): string {
     const fromNum = numberMap.get(raw);
 
     if (fromPunct !== undefined) {
+      if (prevConsonantKey) result += SUKUN;
       result += fromPunct;
       isWordStart = false;
       prevConsonantKey = null;
     } else if (fromNum !== undefined) {
+      if (prevConsonantKey) result += SUKUN;
       result += fromNum;
       isWordStart = false;
       prevConsonantKey = null;
@@ -84,18 +80,30 @@ export function transliterate(input: string): string {
       // If this consonant is the same as the previous one → add shaddah
       if (isConsonant && prevConsonantKey === lower) {
         result += SHADDAH;
-        prevConsonantKey = null; // reset so triple letters = consonant + shaddah + consonant
+        prevConsonantKey = null;
         isWordStart = false;
       } else {
-        // Initial Alif Injection: prepend أ when a word starts with a vowel
-        if (isWordStart && VOWELS.has(lower)) {
-          result += ALIF;
+        // If we have a previous consonant and this is NOT its vowel, add Sukun
+        if (prevConsonantKey && (isConsonant || !VOWELS.has(lower))) {
+          result += SUKUN;
         }
-        result += fromLatin;
+
+        // Special Case: "aa" at word start becomes Alif Madda (آ)
+        if (isWordStart && lower === "aa") {
+          result += ALIF_MADDA;
+        } else {
+          // Initial Alif Injection: prepend Alif when a word starts with a vowel
+          if (isWordStart && VOWELS.has(lower)) {
+            // Use Alif Hamza Below (إ) for "i" and "ii", otherwise Alif Hamza (أ)
+            result += (lower === "i" || lower === "ii") ? ALIF_HAMZA_BELOW : ALIF;
+          }
+          result += fromLatin;
+        }
         prevConsonantKey = isConsonant ? lower : null;
         isWordStart = false;
       }
     } else {
+      if (prevConsonantKey) result += SUKUN;
       result += raw;
       isWordStart = /\s/.test(raw);
       prevConsonantKey = null;
@@ -103,6 +111,8 @@ export function transliterate(input: string): string {
 
     lastIndex = index + raw.length;
   }
+
+  if (prevConsonantKey) result += SUKUN;
 
   // Append any trailing unmatched characters
   result += input.slice(lastIndex);
@@ -132,8 +142,8 @@ export function reverseTransliterate(input: string): string {
       // Find the last alphabetical segment we appended to result
       const lastAlphaMatch = /[a-zA-Z]+$/.exec(result);
       if (lastAlphaMatch) {
-         // Duplicate the entire last segment (it could be a digraph like 'dh' or single char like 'r')
-         result += lastAlphaMatch[0];
+        // Duplicate the entire last segment (it could be a digraph like 'dh' or single char like 'r')
+        result += lastAlphaMatch[0];
       }
       i++;
       continue;
