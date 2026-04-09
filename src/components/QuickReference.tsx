@@ -1,69 +1,210 @@
-import { LATIN_TO_FAR_WADAAD } from "@/constants";
+"use client";
 
-// Quick reference rows to display in the char-map table
-const QUICK_REF = [
-  { latin: "aa", arabic: "ا", note: "A dheer" },
-  { latin: "dh", arabic: "ڎ", note: "D culus" },
-  { latin: "sh", arabic: "ش", note: "SH" },
-  { latin: "kh", arabic: "خ", note: "KH" },
-  { latin: "x", arabic: "ح", note: "X (Xaa)" },
-  { latin: "c", arabic: "ع", note: "C (Cayn)" },
-  { latin: "ee", arabic: "ێ", note: "E dheer" },
-  { latin: "oo", arabic: "وٗ", note: "O dheer" },
-  { latin: "uu", arabic: "ۇ", note: "U dheer" },
-  { latin: "q", arabic: "ق", note: "Q (Qaaf)" },
-];
+import { useState, useMemo } from "react";
+import {
+  LATIN_TO_FAR_WADAAD,
+  punctuationMap,
+  numberMap,
+  VOWELS,
+  CONSONANT_KEYS,
+} from "@/constants";
+import { Search, Copy, Check, Info, Hash, Type, Music } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+type CharCategory = "consonants" | "vowels" | "symbols";
+
+interface CharItem {
+  latin: string;
+  arabic: string;
+  category: CharCategory;
+  note?: string;
+}
 
 export default function QuickReference() {
+  const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState<CharCategory>("consonants");
+  const [copiedChar, setCopiedChar] = useState<string | null>(null);
+
+  // 1. Prepare data
+  const allChars = useMemo(() => {
+    const items: CharItem[] = [];
+
+    // Consonants
+    LATIN_TO_FAR_WADAAD.forEach((arabic, latin) => {
+      if (CONSONANT_KEYS.has(latin)) {
+        items.push({ latin, arabic, category: "consonants" });
+      } else if (VOWELS.has(latin)) {
+        items.push({ latin, arabic, category: "vowels" });
+      }
+    });
+
+    // Symbols & Numbers
+    punctuationMap.forEach((arabic, latin) => {
+      items.push({ latin, arabic, category: "symbols" });
+    });
+    numberMap.forEach((arabic, latin) => {
+      items.push({ latin, arabic, category: "symbols" });
+    });
+
+    return items;
+  }, []);
+
+  const itemsByCategory = useMemo(() => {
+    return {
+      consonants: allChars.filter((i) => i.category === "consonants"),
+      vowels: allChars.filter((i) => i.category === "vowels"),
+      symbols: allChars.filter((i) => i.category === "symbols"),
+    };
+  }, [allChars]);
+
+  // 2. Filter data
+  const filteredItems = useMemo(() => {
+    return allChars.filter((item) => {
+      const matchesSearch =
+        item.latin.toLowerCase().includes(search.toLowerCase()) ||
+        item.arabic.includes(search);
+
+      // If searching, show all categories if they match
+      if (search) return matchesSearch;
+
+      // Otherwise, filter by tab
+      return itemsByCategory[activeTab].some((i) => i.latin === item.latin);
+    });
+  }, [allChars, search, activeTab, itemsByCategory]);
+
+  const handleCopy = (char: string) => {
+    navigator.clipboard.writeText(char);
+    setCopiedChar(char);
+    setTimeout(() => setCopiedChar(null), 2000);
+  };
+
+  const tabs = [
+    { id: "consonants", label: "Shibbaneyaal", icon: Type },
+    { id: "vowels", label: "Shaqallo", icon: Music },
+    { id: "symbols", label: "Tiro & Calaamad", icon: Hash },
+  ];
+
   return (
-    <details className="mt-10 rounded-xl border border-border">
-      <summary className="cursor-pointer select-none px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent">
-        Tixraaca Maabka Xarfaha ↓
-      </summary>
-      <div className="overflow-x-auto px-5 pb-5 pt-3">
-        <table className="w-full border-collapse text-sm">
-          <thead>
-            <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
-              <th className="pb-2 pr-4">Laatiin</th>
-              <th className="pb-2 pr-4" dir="rtl">
-                Far-Wadaad
-              </th>
-              <th className="pb-2">Faahfaahin</th>
-            </tr>
-          </thead>
-          <tbody>
-            {QUICK_REF.map(({ latin, arabic, note }) => (
-              <tr
-                key={latin}
-                className="border-b border-border/50 last:border-0 hover:bg-accent/40"
-              >
-                <td className="py-2 pr-4 font-mono font-bold text-primary">
-                  {latin}
-                </td>
-                <td
-                  dir="rtl"
-                  lang="so-Arab"
-                  className="py-2 pr-4 text-end"
-                  style={{
-                    fontFamily: '"Scheherazade New", serif',
-                    fontSize: "1.4em",
-                  }}
-                >
-                  {arabic}
-                </td>
-                <td className="py-2 text-muted-foreground">{note}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <p className="mt-3 text-xs text-muted-foreground">
-          Waxaa la muujiyay {QUICK_REF.length} kamid ah{" "}
-          {LATIN_TO_FAR_WADAAD.size} xarfo. Shaqalada gaagaaban ee{" "}
-          <span className="font-mono">a e i o u</span> waxay noqdaan shaqalo
-          carabi (ḥarakāt). Erayada ka bilowda shaqal waxay si toos ah u
-          qaataan xarafka Alif (ا).
-        </p>
+    <div className="mt-12 space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
+          <Info className="h-5 w-5 text-primary" />
+          Tixraaca Maabka
+        </h2>
+
+        {/* Search Bar */}
+        <div className="relative w-full sm:max-w-xs">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Raadi xaraf ama calaamad..."
+            className="h-10 w-full rounded-full border border-border bg-background/50 pl-10 pr-4 text-sm focus:border-primary focus:outline-hidden focus:ring-1 focus:ring-primary"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
-    </details>
+
+      {/* Tabs */}
+      {!search && (
+        <div className="flex flex-wrap gap-2 border-b border-border pb-px">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as CharCategory)}
+                className={cn(
+                  "relative flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors",
+                  isActive
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {tab.label}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Results Grid */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <AnimatePresence mode="popLayout">
+          {filteredItems.map((item) => (
+            <motion.div
+              layout
+              key={`${item.latin}-${item.arabic}`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              whileHover={{ y: -2 }}
+              className="group relative flex flex-col items-center justify-center rounded-xl border border-border bg-background/40 p-4 transition-all hover:border-primary/50 hover:bg-accent/30 hover:shadow-lg"
+            >
+              <button
+                onClick={() => handleCopy(item.arabic)}
+                className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100"
+                title="Copy character"
+              >
+                {copiedChar === item.arabic ? (
+                  <Check className="h-3.5 w-3.5 text-green-500" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5 text-muted-foreground hover:text-primary" />
+                )}
+              </button>
+
+              <span className="text-base font-mono font-semibold text-primary">
+                {item.latin}
+              </span>
+              <span
+                dir="rtl"
+                lang="so-Arab"
+                className="my-1 text-2xl"
+                style={{ fontFamily: '"Scheherazade New", serif' }}
+              >
+                {item.arabic}
+              </span>
+
+              {/* Tooltip-like indicator */}
+              <div className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground/0 group-hover:text-muted-foreground transition-all">
+                {copiedChar === item.arabic
+                  ? "La koobiyeeyay!"
+                  : "Riix si aad u koobiyeyso"}
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+
+      {filteredItems.length === 0 && (
+        <div className="flex h-32 flex-col items-center justify-center text-center">
+          <p className="text-sm text-muted-foreground">
+            Lama helin wax natiijo ah.
+          </p>
+        </div>
+      )}
+
+      <p className="rounded-lg bg-accent/30 p-4 text-xs leading-relaxed text-muted-foreground">
+        <strong>FG:</strong> Shaqalada gaagaaban ee{" "}
+        <span className="font-mono text-primary">a e i o u</span> waxay noqdaan
+        calaamado (ḥarakāt). Erayada ka bilowda shaqal waxay si toos ah u
+        qaataan xarafka Alif (ا). Dhammaan xarfaha halkan ku jira waa kuwo toos
+        loogu isticmaali karo beddeleha kore.
+      </p>
+    </div>
   );
 }
