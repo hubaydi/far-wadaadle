@@ -68,6 +68,8 @@ export const numberMap = new Map<string, string>([
 export const ALIF = "أ";
 export const ALIF_MADDA = "آ";
 export const ALIF_HAMZA_BELOW = "إ";
+export const HAMZA_ON_WAW = "ؤ";
+export const HAMZA_ON_YA = "ئ";
 
 /** Short vowel Latin keys (used for Initial Alif Injection detection) */
 export const VOWELS = new Set([

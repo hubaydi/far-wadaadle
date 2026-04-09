@@ -3,6 +3,8 @@ import {
   ALIF_HAMZA_BELOW,
   ALIF_MADDA,
   CONSONANT_KEYS,
+  HAMZA_ON_WAW,
+  HAMZA_ON_YA,
   LATIN_TO_FAR_WADAAD,
   SHADDAH,
   SUKUN,
@@ -40,6 +42,7 @@ export function transliterate(input: string): string {
 
   // Track the previous consonant for gemination detection
   let prevConsonantKey: string | null = null;
+  let pendingApostrophe = false;
 
   const globalRegex = new RegExp(TRANSLITERATE_REGEX.source, "gi");
 
@@ -52,6 +55,10 @@ export function transliterate(input: string): string {
     // Characters between the last match and this one (spaces, unknowns, etc.)
     const gap = input.slice(lastIndex, index);
     if (gap) {
+      if (pendingApostrophe) {
+        result += ALIF;
+        pendingApostrophe = false;
+      }
       if (prevConsonantKey) result += SUKUN;
       result += gap;
       isWordStart = /\s/.test(gap[gap.length - 1]);
@@ -64,17 +71,31 @@ export function transliterate(input: string): string {
     const fromNum = numberMap.get(raw);
 
     if (fromPunct !== undefined) {
+      if (pendingApostrophe) result += ALIF;
       if (prevConsonantKey) result += SUKUN;
       result += fromPunct;
       isWordStart = false;
       prevConsonantKey = null;
+      pendingApostrophe = false;
     } else if (fromNum !== undefined) {
+      if (pendingApostrophe) result += ALIF;
       if (prevConsonantKey) result += SUKUN;
       result += fromNum;
       isWordStart = false;
       prevConsonantKey = null;
+      pendingApostrophe = false;
     } else if (fromLatin !== undefined) {
       const isConsonant = CONSONANT_KEYS.has(lower);
+
+      // Handle raw apostrophe signal separately
+      if (lower === "'") {
+        if (prevConsonantKey) result += SUKUN;
+        pendingApostrophe = true;
+        prevConsonantKey = null;
+        lastIndex = index + raw.length;
+        isWordStart = false;
+        continue;
+      }
 
       // ── Gemination (Shaddah) ──
       // If this consonant is the same as the previous one → add shaddah
@@ -83,6 +104,18 @@ export function transliterate(input: string): string {
         prevConsonantKey = null;
         isWordStart = false;
       } else {
+        // If we have a pending apostrophe, decide its carrier based on this match
+        if (pendingApostrophe) {
+          if (VOWELS.has(lower)) {
+            if (/^[uo]/.test(lower)) result += HAMZA_ON_WAW;
+            else if (/^[ie]/.test(lower)) result += HAMZA_ON_YA;
+            else result += ALIF;
+          } else {
+            result += ALIF;
+          }
+          pendingApostrophe = false;
+        }
+
         // If we have a previous consonant and this is NOT its vowel, add Sukun
         if (prevConsonantKey && (isConsonant || !VOWELS.has(lower))) {
           result += SUKUN;
@@ -103,15 +136,18 @@ export function transliterate(input: string): string {
         isWordStart = false;
       }
     } else {
+      if (pendingApostrophe) result += ALIF;
       if (prevConsonantKey) result += SUKUN;
       result += raw;
       isWordStart = /\s/.test(raw);
       prevConsonantKey = null;
+      pendingApostrophe = false;
     }
 
     lastIndex = index + raw.length;
   }
 
+  if (pendingApostrophe) result += ALIF;
   if (prevConsonantKey) result += SUKUN;
 
   // Append any trailing unmatched characters
