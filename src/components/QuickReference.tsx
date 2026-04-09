@@ -197,14 +197,50 @@ export default function QuickReference() {
           </p>
         </div>
       )}
-
-      <p className="rounded-lg bg-accent/30 p-4 text-xs leading-relaxed text-muted-foreground">
-        <strong>FG:</strong> Shaqalada gaagaaban ee{" "}
-        <span className="font-mono text-primary">a e i o u</span> waxay noqdaan
-        calaamado (ḥarakāt). Erayada ka bilowda shaqal waxay si toos ah u
-        qaataan xarafka Alif (ا). Dhammaan xarfaha halkan ku jira waa kuwo toos
-        loogu isticmaali karo beddeleha kore.
-      </p>
+      <div className="">
+        <p className="rounded-lg bg-accent/30 p-4 text-sm leading-relaxed text-muted-foreground">
+          <strong>FG:</strong> Qaabka aan Xarfaha Carabiga iyo Laatiinka isugu
+          Maab garaynay waxa aan kasoo dheeganay{" "}
+          <span className="font-mono text-primary">
+            Hab Qoraalkii Hore ee Far-Wadaad.
+          </span>{" "}
+          Qaababka far wadaadka loo qoro 95% isku mid ayay ahaayeen. waxaa jiray
+          xarfo yaryar oo in kala si loo qoro dhici jirtay. sida xarfaha (d, g,
+          e, o, ).
+        </p>
+        <p className="rounded-lg bg-accent/30 p-4 text-sm leading-relaxed text-muted-foreground">
+          <strong>FG:</strong> xarafka &quot;D&quot; labo qaab ayaa loo qori
+          jiray: (د, ط) waxaanu doorbidnay
+          <span className="font-mono text-primary"> Xarafka (د)</span> maadama
+          uu dhawaaqa si sax ah u matalayo, halka xarafka (ط) uu matalayo cod
+          kale oo aanan Af soomaaliga laga helin
+        </p>
+        <p className="rounded-lg bg-accent/30 p-4 text-sm leading-relaxed text-muted-foreground">
+          <strong>FG:</strong> shaqallada &quot;e iyo u&quot; farta carabiga ee
+          asalka ah lagama heli karo. Laakiin maadama farta in ka badan 100
+          luuqadood ay isticmaalaan. waxaa jira xarfo loo sameeyay labadaas Cod.
+          <span className="font-mono text-primary">
+            {" "}
+            shaqalka (O) waxaan ku maab garaynay (◌ٗ )
+          </span>
+          <span className="font-mono text-primary">
+            {" "}
+            shaqalka (E) waxaan ku maab garaynay (ٚ◌)
+          </span>
+        </p>
+        <p className="rounded-lg bg-accent/30 p-4 text-sm leading-relaxed text-muted-foreground">
+          <strong>FG:</strong> xarafka G isaga dadkii far wadaad wax ku qori
+          jiray qaar kamida waxay isticmaali jireen (غ), laakiin xarafka saxda
+          ah ee codkaa mattala luuqado badanna ay isticmaalaan waa (گ)
+        </p>
+        <p className="rounded-lg bg-accent/30 p-4 text-sm leading-relaxed text-muted-foreground">
+          <strong>FG:</strong> Shaqalada gaagaaban ee{" "}
+          <span className="font-mono text-primary">a e i o u</span> waxay
+          noqdaan calaamado (ḥarakāt). Erayada ka bilowda shaqal waxay si toos
+          ah u qaataan xarafka Alif (ا). Dhammaan xarfaha halkan ku jira waa
+          kuwo toos loogu isticmaali karo beddeleha kore.
+        </p>
+      </div>
     </div>
   );
 }

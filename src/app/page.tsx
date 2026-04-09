@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import QuickReference from "@/components/QuickReference";
 import ScriptInfo from "@/components/ScriptInfo";
 import TransliteratorPane from "@/components/TransliteratorPane";
+import ArabicScriptInfo from "@/components/ArabicScriptInfo";
 
 export default function Home() {
   return (
@@ -33,6 +34,7 @@ export default function Home() {
         <TransliteratorPane />
         <QuickReference />
         <ScriptInfo />
+        <ArabicScriptInfo />
       </main>
 
       <Footer />

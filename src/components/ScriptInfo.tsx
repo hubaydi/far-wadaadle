@@ -15,7 +15,7 @@ export default function ScriptInfo() {
       title: "Yaa Isticmaali Jiray?",
       icon: BookOpen,
       content:
-        "Culimadii Soomaaliyeed sida Sh. Yuusuf axmed Al-kownayn, Sayid Maxamed Cabdulle Xasan, Sheikh Uwais al-Barawi iyo kuwo kale oo badan. Qorayaal kala duwan ayaa alifay habab lagu waafajinayo xarfaha Carabiga codadka gaarka ah ee Af-Soomaaliga. Waxaa loo isticmaali jiray qoraallada diinta, tixaha gabayada, iyo xiriirka caalamiga ah ee lala lahaa dunida kale.",
+        "waxa Wax ku qori jiray Culimadii Soomaaliyeed sida Sh. Yuusuf axmed Al-kownayn, Sayid Maxamed Cabdulle Xasan, Sh. Uways al-Barawi iyo kuwo kale oo badan. Qoreyaal Soomaliyeed oo kala duwan ayaa alifay habab lagu waafajinayo xarfaha Carabiga codadka gaarka ah ee Af-Soomaaliga.",
     },
     {
       title: "Sidee u Shaqeeyaa?",
@@ -77,7 +77,19 @@ export default function ScriptInfo() {
       >
         <Quote className="mx-auto mb-4 h-8 w-8 text-primary/40" />
         <p className="mx-auto max-w-2xl text-lg font-medium italic text-foreground/90">
-          &quot;Farta Far-Wadaadku ... .&quot;
+          &quot;Asc, waxaa Alle mahaddii ah inaanu ugu danbayn Hirgalinnay
+          Mareegtan Ummada soomaaliyeed u fududaynaysa in Qoraal kasta oo
+          Far-Soomaali Laatiin ku qoran si fudud ugu beddeli karaan Far-Wadaad
+          (carabi). ... .&quot;
+        </p>
+        <p className="mx-auto mt-2 max-w-2xl text-lg font-medium italic text-foreground/90">
+          &quot;Waxaanu u hadyaday-naynaa cid kasta oo danaynaysa fartaan.
+          jecelna in Af-kooda Hodanka ah ay ku qoraan farta hodanka ah ee
+          Carabiga... .&quot;
+        </p>
+        <p className="mt-4 text-sm text-muted-foreground">
+          Tijaabada aan mariinnay Mashiinka waxa ay tilmaamaysaa in wax ku dhow
+          100% uu si sax ah u qabanayo beddelidda.
         </p>
         <div className="mt-4 text-sm text-muted-foreground">
           — Developer-ka Mareegta
