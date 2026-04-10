@@ -6,28 +6,96 @@ import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
+const siteUrl = "https://far-wadaadle.qaamuusle.com";
+
 export const metadata: Metadata = {
-  title: "Far-Wadaadle — Beddele Soomaali Laatiin to Far-Wadaad",
+  metadataBase: new URL(siteUrl),
+  title: "Far-Wadaadle — Somali Latin to Far-Wadaad Converter",
   description:
-    "Beddelaad toos ah oo Far Wadaad (farta carabiga ee soomaaliga) ah. U beddel qoraalka Soomaali Laatiinka farta taariikhiga ah ee far Wadaad si dhakhso ah .",
+    "Live Beddelaad (transliteration) tool for Somali Latin to Far-Wadaad (Arabic script). Convert Somali text to the historical script instantly.",
   keywords: [
     "Somali Arabic script",
     "Far Wadaad",
+    "Somali Script",
+    "Somali Language",
     "Far Wadaadle",
     "Somali orthography",
     "Somali transliteration",
     "Af Soomaali",
+    "Somali converter",
+    "Arabic script Somali",
   ],
+  authors: [{ name: "Hobaydi", url: "https://github.com/hubaydi" }],
+  creator: "Hobaydi",
+  publisher: "Far-Wadaadle",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: "Far-Wadaadle — Soomaali Laatiin to Far-Wadaad",
+    title: "Far-Wadaadle — Somali Latin to Far-Wadaad",
     description:
       "U beddel qoraalka Soomaali Laatiinka Far-Wadaad (farta carabiga) si toos ah.",
-    locale: "so",
+    url: siteUrl,
+    siteName: "Far-Wadaadle",
+    locale: "so_SO",
     type: "website",
+    images: [
+      {
+        url: "/brand-icon.png",
+        width: 512,
+        height: 512,
+        alt: "Far-Wadaadle — Somali Latin to Far-Wadaad Converter",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Far-Wadaadle — Somali Latin to Far-Wadaad",
+    description:
+      "Convert Somali text to the historical Far-Wadaad script instantly.",
+    creator: "@hubaydi",
+    images: ["/brand-icon.png"],
   },
   icons: {
     icon: "/brand-icon.png",
     apple: "/brand-icon.png",
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Far-Wadaadle",
+  description:
+    "A real-time Somali Latin to Far-Wadaad (Arabic script) transliteration tool.",
+  url: siteUrl,
+  applicationCategory: "UtilityApplication",
+  operatingSystem: "Windows, macOS, Linux, Android, iOS",
+  creator: {
+    "@type": "Person",
+    name: "Hobaydi",
+    url: "https://github.com/hubaydi",
+  },
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
   },
 };
 
@@ -39,8 +107,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="so" className={cn("h-full antialiased", inter.variable)} suppressHydrationWarning>
+    <html
+      lang="so"
+      className={cn("h-full antialiased", inter.variable)}
+      suppressHydrationWarning
+    >
       <body className="min-h-full flex flex-col font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
