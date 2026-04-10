@@ -13,7 +13,7 @@ const DEBOUNCE_MS = 150;
 export default function TransliteratorPane() {
   const [latinText, setLatinText] = useState("");
   const [arabicText, setArabicText] = useState("");
-  const [font, setFont] = useState<ArabicFont>("scheherazade");
+  const [font, setFont] = useState<ArabicFont>("noto");
   const [direction, setDirection] = useState<Direction>("ltr-to-rtl");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -114,7 +114,10 @@ export default function TransliteratorPane() {
               initial={{ opacity: 0.7 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.15 }}
-              style={{ fontFamily: getFontFamily(font), fontSize: "1.35em" }}
+              style={{
+                fontFamily: getFontFamily(font),
+                fontSize: font === "lateef" ? "1.65em" : "1.35em",
+              }}
               className="w-full resize-none rounded-xl border border-border bg-card p-4 leading-loose text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
             />
           </AnimatePresence>

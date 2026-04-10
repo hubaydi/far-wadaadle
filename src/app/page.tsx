@@ -18,7 +18,7 @@ export default function Home() {
             dir="rtl"
             lang="so-Arab"
             className="mt-4 block text-2xl text-primary sm:text-4xl"
-            style={{ fontFamily: '"Scheherazade New", serif' }}
+            style={{ fontFamily: '"Noto Sans Arabic", sans-serif' }}
           >
             أَفْ-سٗومَالِگَ كُ قٗرْ فَرْ-وَدَادْ
           </span>

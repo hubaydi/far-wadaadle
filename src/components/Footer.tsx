@@ -40,7 +40,7 @@ export default function Footer() {
             dir="rtl"
             lang="so-Arab"
             style={{
-              fontFamily: '"Scheherazade New", serif',
+              fontFamily: '"Noto Sans Arabic", sans-serif',
               fontSize: "1.3em",
             }}
           >

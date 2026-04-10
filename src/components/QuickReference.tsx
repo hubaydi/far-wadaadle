@@ -174,7 +174,7 @@ export default function QuickReference() {
                 dir="rtl"
                 lang="so-Arab"
                 className="my-1 text-3xl"
-                style={{ fontFamily: '"Scheherazade New", serif' }}
+                style={{ fontFamily: '"Noto Sans Arabic", sans-serif' }}
               >
                 {item.arabic}
               </span>

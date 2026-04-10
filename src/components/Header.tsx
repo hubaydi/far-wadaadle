@@ -20,7 +20,7 @@ export default function Header() {
                 dir="rtl"
                 lang="so-Arab"
                 className="text-primary"
-                style={{ fontFamily: '"Scheherazade New", serif' }}
+                style={{ fontFamily: '"Noto Sans Arabic", sans-serif' }}
               >
                 فرودادلي
               </span>
