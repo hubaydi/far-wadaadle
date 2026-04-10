@@ -69,7 +69,7 @@ export default function ArabicScriptInfo() {
     <section className="mt-16 space-y-10 border-t border-border/40 pt-16">
       <div className="max-w-2xl">
         <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-          Farta <span className="text-primary">Carabiga</span> & Luuqadah Lagu
+          Farta <span className="text-primary">Carabiga</span> & Luuqadaha Lagu
           Qoro
         </h2>
         <p className="mt-3 text-muted-foreground">

@@ -29,7 +29,7 @@ export default function FontToggle({ value, onChange }: FontToggleProps) {
           onClick={() => onChange(id)}
           aria-pressed={value === id}
           className={cn(
-            "rounded-md px-3 py-1 text-xs font-medium transition-all",
+            "rounded-md px-3 py-1 text-xs font-medium transition-all cursor-pointer",
             value === id
               ? "bg-background text-foreground shadow-sm"
               : "text-muted-foreground hover:text-foreground"

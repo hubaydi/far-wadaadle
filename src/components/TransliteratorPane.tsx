@@ -128,7 +128,7 @@ export default function TransliteratorPane() {
           id="direction-toggle"
           onClick={toggleDirection}
           aria-label="Toggle transliteration direction"
-          className="rounded-md border border-border px-3 py-1 text-xs font-medium transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="rounded-md border border-border px-3 py-1 text-xs font-medium transition-colors cursor-pointer hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {direction === "ltr-to-rtl" ? "Laatiin → Carabi ⇄" : "Carabi → Laatiin ⇄"}
         </button>

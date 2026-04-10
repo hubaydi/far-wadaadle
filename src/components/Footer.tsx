@@ -1,17 +1,20 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
-    <footer className="border-t border-border/60 px-4 py-8 text-center text-xs text-muted-foreground sm:px-6">
+    <footer className="border-t border-border/60 px-4 py-8 text-center text-sm text-muted-foreground sm:px-6">
       <div className="mx-auto max-w-5xl space-y-3">
-        <p className="flex items-center justify-center gap-1.5">
-          Far-Wadaadle · Somali Arabic/Latin Script Converter · Made with ❤️ by
-          <a
+        <p className="">
+          Far-Wadaadle · Somali Latin to Arabic Script Converter · Made with ❤️
+          by
+          <Link
             href="https://github.com/hubaydi"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-foreground transition-colors hover:text-primary"
+            className="font-medium text-foreground transition-colors hover:text-primary px-2"
           >
             Hobaydi
-          </a>
+          </Link>
         </p>
         <p className="flex items-center justify-center gap-2 text-[14px]">
           <span className="opacity-70">This project is open source.</span>

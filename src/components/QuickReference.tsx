@@ -95,7 +95,7 @@ export default function QuickReference() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
           <Info className="h-5 w-5 text-primary" />
-          Tixraaca Maabka
+          Tixraaca Maabka Xarfaha
         </h2>
 
         {/* Search Bar */}
@@ -122,7 +122,7 @@ export default function QuickReference() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as CharCategory)}
                 className={cn(
-                  "relative flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors",
+                  "relative flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors cursor-pointer",
                   isActive
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground",
@@ -157,7 +157,7 @@ export default function QuickReference() {
             >
               <button
                 onClick={() => handleCopy(item.arabic)}
-                className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100"
+                className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100 cursor-pointer"
                 title="Copy character"
               >
                 {copiedChar === item.arabic ? (
@@ -173,7 +173,7 @@ export default function QuickReference() {
               <span
                 dir="rtl"
                 lang="so-Arab"
-                className="my-1 text-2xl"
+                className="my-1 text-3xl"
                 style={{ fontFamily: '"Scheherazade New", serif' }}
               >
                 {item.arabic}
