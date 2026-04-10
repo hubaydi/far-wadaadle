@@ -132,7 +132,9 @@ export default function TransliteratorPane() {
         >
           {direction === "ltr-to-rtl" ? "Laatiin → Carabi ⇄" : "Carabi → Laatiin ⇄"}
         </button>
-        <span>{arabicText.length} xaraf far-wadaad</span>
+        <span>
+          {arabicText.replace(/[\u064B-\u065F\u0670]/g, "").length} xaraf far-wadaad
+        </span>
       </div>
     </section>
   );

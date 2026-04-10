@@ -24,6 +24,10 @@ export const metadata: Metadata = {
     locale: "so",
     type: "website",
   },
+  icons: {
+    icon: "/brand-icon.png",
+    apple: "/brand-icon.png",
+  },
 };
 
 import { ThemeProvider } from "@/components/theme-provider";
