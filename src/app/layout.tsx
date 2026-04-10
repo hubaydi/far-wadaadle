@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -48,6 +49,12 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        {/* Analytics */}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="672f31b1-7fc6-4cc5-858e-9e1b152d9e54"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

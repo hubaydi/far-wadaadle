@@ -62,7 +62,7 @@ export default function TransliteratorPane() {
       {/* ── Header row ── */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Toolbar outputText={arabicText} onClear={handleClear} />
-        <div className="flex items-center gap-3">
+        <div className="hidden md:block">
           <FontToggle value={font} onChange={setFont} />
         </div>
       </div>
@@ -89,6 +89,11 @@ export default function TransliteratorPane() {
             rows={12}
             className="w-full resize-none rounded-xl border border-border bg-card p-4 text-base leading-relaxed text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
           />
+        </div>
+
+        {/* Mobile Font Toggle */}
+        <div className="md:hidden flex justify-center py-2">
+          <FontToggle value={font} onChange={setFont} />
         </div>
 
         {/* Arabic pane */}
@@ -133,10 +138,13 @@ export default function TransliteratorPane() {
           aria-label="Toggle transliteration direction"
           className="rounded-md border border-border px-3 py-1 text-xs font-medium transition-colors cursor-pointer hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          {direction === "ltr-to-rtl" ? "Laatiin → Carabi ⇄" : "Carabi → Laatiin ⇄"}
+          {direction === "ltr-to-rtl"
+            ? "Laatiin → Carabi ⇄"
+            : "Carabi → Laatiin ⇄"}
         </button>
         <span>
-          {arabicText.replace(/[\u064B-\u065F\u0670]/g, "").length} xaraf far-wadaad
+          {arabicText.replace(/[\u064B-\u065F\u0670]/g, "").length} xaraf
+          far-wadaad
         </span>
       </div>
     </section>

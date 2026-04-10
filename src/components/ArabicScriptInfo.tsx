@@ -12,36 +12,44 @@ export default function ArabicScriptInfo() {
   const languages = [
     {
       name: "Carabi",
+      flag: "🇸🇦",
       description: "Luqadda koowaad, oo ay ku jiraan dhammaan lahjadoheeda.",
     },
     {
       name: "Faaris (Farsi/Dari)",
+      flag: "🇮🇷 🇦🇫",
       description: "Waxaa looga hadlaa Iiraan iyo Afgaanistaan.",
     },
     {
       name: "Urdhu",
+      flag: "🇵🇰",
       description: "Luqadda qaranka ee Bakistaan.",
     },
     {
       name: "Bashto",
+      flag: "🇦🇫 🇵🇰",
       description: "Waxaa looga hadlaa Afgaanistaan iyo Bakistaan.",
     },
     {
       name: "Kurdi",
+      flag: "☀️",
       description: "Gaar ahaan lahjadda Soraaniga (Sorani).",
     },
     {
       name: "Maalay (Jawi)",
+      flag: "🇲🇾 🇧🇳",
       description:
         "Taariikh ahaan koonfur-bari Aasiya, wali waxaa laga isticmaalaa qaybo ka mid ah Burunaay iyo Malaysiya.",
     },
     {
       name: "Uqhuur (Uyghur)",
+      flag: "🌍",
       description:
         "Waxaa laga isticmaalaa gobolka Turkistaanta Bari (Xinjiang) ee Shiinaha.",
     },
     {
       name: "Sindhi iyo Bunjaabi",
+      flag: "🇵🇰 🇮🇳",
       description:
         "Lahjado/qaabab gaar ah (tusaale ahaan, Shahmukhi) ee Bakistaan/Hindiya.",
     },
@@ -110,7 +118,10 @@ export default function ArabicScriptInfo() {
               viewport={{ once: true }}
               className="group rounded-xl border border-border/40 bg-background/30 p-5 transition-all hover:border-primary/30 hover:bg-accent/10"
             >
-              <h4 className="font-semibold text-foreground">{lang.name}</h4>
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-foreground">{lang.name}</h4>
+                <span className="text-xl">{lang.flag}</span>
+              </div>
               <p className="mt-1 text-sm text-muted-foreground">
                 {lang.description}
               </p>
