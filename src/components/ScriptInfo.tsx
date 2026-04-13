@@ -2,6 +2,7 @@
 
 import { History, BookOpen, Settings, Languages, Quote } from "lucide-react";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 export default function ScriptInfo() {
   const sections = [
@@ -68,6 +69,60 @@ export default function ScriptInfo() {
           );
         })}
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mt-12 mb-12 overflow-hidden rounded-3xl border border-border/50 bg-background/40 transition-all hover:bg-accent/10 hover:border-primary/40 group relative"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          {/* Image Side */}
+          <div className="relative min-h-95 w-full border-b lg:border-b-0 lg:border-r border-border/30 p-8 flex items-center justify-center bg-linear-to-br from-primary/5 to-transparent overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--color-primary-100)_0%,transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,var(--color-primary-900)_0%,transparent_70%)] opacity-20" />
+
+            {/* Tilted Photo Frame */}
+            <div className="relative w-full max-w-70 sm:max-w-xs aspect-3/4 rounded-sm bg-[#f9f5ed] dark:bg-[#e6dcc5] shadow-lg rotate-3 transition-all duration-500 group-hover:rotate-0 group-hover:scale-[1.02] group-hover:shadow-xl border border-black/10 dark:border-white/10 p-2 lg:p-3 z-10">
+              <div className="relative h-full w-full overflow-hidden border border-black/5 dark:border-black/20">
+                <Image
+                  src="/warqad-1932.png"
+                  alt="Warqad la qoray 1932 oo ku qoran Far-Wadaad"
+                  fill
+                  className="object-cover object-top opacity-90 contrast-[1.05] sepia-[0.1] transition-all duration-500 group-hover:opacity-100 group-hover:sepia-0"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Text Side */}
+          <div className="p-8 lg:p-12 flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary w-fit mb-6">
+              <History className="h-4 w-4" />
+              <span>Warqad Taariikhi ah (1932)</span>
+            </div>
+
+            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground mb-4">
+              Dhaxal La Ilaaliyay
+            </h3>
+
+            <div className="space-y-4 text-base text-muted-foreground leading-relaxed">
+              <p>
+                Sawirkani wuxuu muujinayaa warqad la qoray sanadkii{" "}
+                <strong>1932-dii</strong>, oo uu qoray Nin ku sugnaa Berbera una
+                diray xaaskiisa oo ku sugnayd Burco. warqadda waxay ku
+                qorantahay far wadaad. taas oo tusaale nool u ah sida
+                Far-Wadaadka loogu adeegsan jiray isgaarsiinta xilli aad u fog.
+              </p>
+              <p>
+                Qoraalka dhexdiisa, waxaad ku arkaysaa sida farsamada iyo
+                silsilada leh ee xarfaha carabiga loogu qaabeeyay dhawaaqa
+                Af-Soomaaliga,taasoo ah bilicda iyo sooyaalka uu mashruucani soo
+                noolaynayo. Una taaganyahay dhowriddiisa
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}

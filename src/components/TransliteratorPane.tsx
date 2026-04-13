@@ -114,7 +114,7 @@ export default function TransliteratorPane() {
               lang="so-Arab"
               dir="rtl"
               spellCheck={false}
-              placeholder="...ترجمةالنص هنا"
+              placeholder="...فَرْ وَدَادْ-نَ هَلْكَنْ أَيَيْ كَسٗو مُوقَنْ"
               rows={12}
               initial={{ opacity: 0.7 }}
               animate={{ opacity: 1 }}
